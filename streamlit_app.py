@@ -1,6 +1,40 @@
 import streamlit as st
 
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+# 페이지 기본 설정
+st.set_page_config(page_title="순열 방탈출 미션", page_icon="🔐", layout="centered")
+
+# 제목 및 설명
+st.title("🔐 상원고 순열 방탈출!")
+st.info("아래 3개의 미션을 모두 해결하고 암호를 알아내어 금고를 여세요!")
+
+st.divider() # 구분선
+
+# 미션 1: 교대로 번갈아 서기
+st.subheader("📌 미션 1")
+st.write("상원고 축제 홍보대사로 남학생 3명과 여학생 3명이 일렬로 서서 사진을 찍으려고 합니다. 남학생과 여학생이 **서로 번갈아 교대로** 서는 경우의 수는 몇 가지일까요?")
+q1 = st.text_input("미션 1 정답 (숫자만 입력):", key="q1")
+
+# 미션 2: 이웃하지 않게 끼워 넣기
+st.subheader("📌 미션 2")
+st.write("1학년 학생 3명과 2학년 학생 4명이 일렬로 서서 급식을 기다립니다. **1학년 학생 3명은 어느 누구도 서로 이웃하지 않게** 서는 경우의 수는 몇 가지일까요?")
+q2 = st.text_input("미션 2 정답 (숫자만 입력):", key="q2")
+
+# 미션 3: 양 끝 고정 + 이웃하기 (복합 조건)
+st.subheader("📌 미션 3")
+st.write("영어 단어 **'SPECIAL'**의 7개 문자를 일렬로 나열할 때, **'S'와 'P'는 서로 이웃**하고, **양 끝에는 모두 모음(E, I, A)**이 오도록 나열하는 경우의 수는 몇 가지일까요?")
+q3 = st.text_input("미션 3 정답 (숫자만 입력):", key="q3")
+
+st.divider()
+
+# 정답 확인 버튼
+if st.button("🗝️ 금고 열기!", use_container_width=True):
+    # 정답:
+    # 미션 1: (남여남여남여: 3! * 3! = 36) + (여남여남여남: 3! * 3! = 36) = 72
+    # 미션 2: 2학년 4명 배열(4!) * 사이사이 5자리 중 3자리 선택(5P3) = 24 * 60 = 1440
+    # 미션 3: 양 끝 모음(3P2) * SP묶음(2!) * 남은 4덩어리 배열(4!) = 6 * 2 * 24 = 288
+    
+    if q1 == "72" and q2 == "1440" and q3 == "288":
+        st.success("🎉 찰칵! 금고가 열렸습니다! 이 화면을 선생님께 가장 먼저 보여주세요!")
+        st.balloons() # 정답 시 풍선 이펙트
+    else:
+        st.error("❌ 삐빅! 암호가 틀렸습니다. 힌트: 교대로 서는 경우는 시작하는 성별이 두 가지! 이웃하지 않게 하려면 누구를 먼저 세워야 할지 생각해보세요.")
