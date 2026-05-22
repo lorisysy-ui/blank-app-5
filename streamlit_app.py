@@ -6,6 +6,8 @@ st.set_page_config(page_title="상원고 순열 방탈출", page_icon="🔐", la
 # 학생들의 현재 스테이지를 기억하는 저장소 만들기
 if 'stage' not in st.session_state:
     st.session_state.stage = 1
+if 'stage1_unlocked' not in st.session_state:
+    st.session_state.stage1_unlocked = False
 
 st.title("🔐 상원고 순열 방탈출!")
 
@@ -32,12 +34,19 @@ if st.session_state.stage == 1:
 
     if st.button("🗝️ 1단계 금고 열기!", use_container_width=True):
         if q1 == "72" and q2 == "1440" and q3 == "288":
-            st.success("🎉 찰칵! 첫 번째 금고가 열렸습니다! 보너스 스테이지로 이동합니다...")
-            st.balloons()
-            st.session_state.stage = 2
+            st.session_state.stage1_unlocked = True
             st.rerun()
         else:
             st.error("❌ 삐빅! 암호가 틀렸습니다. 다시 고민해보세요!")
+
+    if st.session_state.stage1_unlocked:
+        st.success("🎉 찰칵! 첫 번째 금고가 열렸습니다!")
+        st.balloons()
+        st.info("아쉽죠? 우리 금고 하나 더 열어볼까요?")
+        if st.button("🗝️ 2단계 금고 열러 가기", use_container_width=True):
+            st.session_state.stage = 2
+            st.session_state.stage1_unlocked = False
+            st.rerun()
 
 
 # ==========================================
